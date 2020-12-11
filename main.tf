@@ -6,6 +6,9 @@ data "external" "tls_certificate" {
   }
 }
 
+output "id" {
+  value = data.external.tls_certificate.result.id
+}
 output "serial_number" {
   value = data.external.tls_certificate.result.serial_number
 }
