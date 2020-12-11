@@ -2,7 +2,7 @@ data "external" "tls_certificate" {
   program = ["bash", "${path.root}/read_certificate.sh"]
 
   query = {
-    url = "/home/mkaesz/workspace/tf-ext-ds-tls-cert/google.x509"
+    url = "${path.root}/test/google.x509"
 #    url = "https://google.com"
   }
 }
