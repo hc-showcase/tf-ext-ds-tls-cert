@@ -51,6 +51,7 @@ ISSUER=$(getCertIssuer)
 
 read -r -d '' JSON << EOM
 {
+  "id": "$(getCertSerialNumber)",
   "label": "$(getCommonName $SUBJECT)",
   "node": "$(hostname)",
   "date": "$(date)",
