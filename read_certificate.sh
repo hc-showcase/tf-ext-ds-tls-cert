@@ -4,7 +4,12 @@ IFS=''
 #Script adapted from https://github.com/jsiegele/x509tojson/blob/master/x509tojson.sh
 eval "$(jq -r '@sh "export URL=\(.url)"')"
 
-CERT=$(echo "" | openssl s_client -connect $URL:443 2>/dev/null | openssl x509 -text 2>/dev/null)
+if [[ $URL =~ ^https://[^/]+ ]]; then
+  URL=$(echo $URL | cut -d'/' -f3)
+  CERT=$(echo "" | openssl s_client -connect $URL:443 2>/dev/null | openssl x509 -text 2>/dev/null)
+else 
+  CERT=$(timeout 3s cat $URL)
+fi
 
 getCert() {
   echo $CERT | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' | tr -d '\n'
